@@ -1,0 +1,17 @@
+.idea
+.DS_Store
+__pycache__
+
+/datasets
+/output/json
+
+frontend/node_modules
+
+venv
+
+/data_pre_cal
+data
+cached_data
+._cached_data
+cached_data.tar.gz
+.vscode
