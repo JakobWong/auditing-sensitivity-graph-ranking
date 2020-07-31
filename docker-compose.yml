@@ -1,0 +1,45 @@
+version: "3"
+
+services:
+    backend:
+        build: ./
+        expose: 
+            - "5000"
+        ports: 
+            - "5000:5000"
+        volumes: 
+            - .:/app
+        command:
+            bash -c "bash backend_builder.sh"
+
+        networks: 
+            - app-test
+    
+    frontend:
+        build: ./frontend
+        expose: 
+            - "3000"
+        ports: 
+            - "3000:3000"
+        volumes: 
+            - ./frontend:/app
+        networks: 
+            - app-test
+        # depends_on: 
+        #     - backend
+        # links:
+        #     - backend
+        stdin_open: true
+        tty: true
+        environment: 
+            - CI=true
+        command:
+            bash -c "npm install
+            && npm audit fix
+            && bash module_connector.sh
+            && npm start"
+        
+
+networks:
+    app-test:
+        driver: bridge
